@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
 # this needs to update in realtime too and deliver some parameters
-    return render_template('index.html')
+    return render_template('index.html', resultsToDisplay = data)
 
 @app.route('/input_File')
 # this is a dynamic AJAX-request without a new request
@@ -24,6 +24,9 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 conn = mysql.connect()
+cur = conn.cursor()
+cur.execute('SELECT * FROM url')
+data = cur.fetchall()
 
 # hier muss dann noch aus dem datahandler die entsprechenden Methoden aufgerufen werden, die die datenbank betreffen. 
 
