@@ -11,8 +11,8 @@ app.config.from_pyfile('database.cfg')
 def hello_world():
     # this needs to update in realtime too and deliver some parameters
     dumps = json.dumps(query.get_url())
-    csvArray = [Csv(**k) for k in json.loads(dumps)]
-    return render_template('index.html', csvArray=csvArray)
+    csvarray = [Csv(**k) for k in json.loads(dumps)]
+    return render_template('index.html', csvArray=csvarray)
 
 
 @app.route('/input_File')
