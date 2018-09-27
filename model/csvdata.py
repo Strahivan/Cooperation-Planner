@@ -8,3 +8,13 @@ class Csv:
       self.tld = TLD
       self.inlink = Inlink
       self.statuscode = Statuscode
+
+"""
+   def __init__(self, id, URL, Statuscode, TLD, Status, Inlink):
+      self.id = id
+      self.url = URL
+      self.statuscode = Statuscode
+      self.tld = TLD
+      self.status = Status
+      self.inlink = Inlink
+"""
