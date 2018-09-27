@@ -42,16 +42,27 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table id="results">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                              <th scope="col">Status</th>
+                              <th scope="col">Url</th>
+                              <th scope="col">Statuscode</th>
+                              <th scope="col">Top Level Domain</th>
+                              <th scope="col">Inlink</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                         {% for row in csvArray %}
                         <tr>
-                        <td class="c1">{{ row.status }}</td>
-                        <td class="c2">{{ row.url }}</td>
-                        <td class="c3">{{ row.statuscode }}</td>
-                        <td class="c4">{{ row.tld }}</td>
-                        <td class="c5">{{ row.inlink }}</td>
+                            <th scope="row">{{ row.status }}</th>
+                            <td>{{ row.url }}</td>
+                            <td>{{ row.statuscode }}</td>
+                            <td>{{ row.tld }}</td>
+                            <td>{{ row.inlink }}</td>
                         </tr>
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
