@@ -11,13 +11,13 @@ app.config.from_pyfile('database.cfg')
 def hello_world():
     # this needs to update in realtime too and deliver some parameters
     dumps = json.dumps(query.get_url())
-    entries = []
-    for row in dumps:
-        json_object = json.load(row)
-        entries.append(json_object)
-    #data = Csv(**json.load(dumps))
-    #print data
-    return render_template('index.html', csv=entries)
+    #entries = []
+    #for row in dumps:
+    #    json_object = json.load(row)
+    #    entries.append(json_object)
+    data = Csv(**json.loads(dumps)[0])
+    print data
+    return render_template('index.html', csv=data)
 
 
 @app.route('/input_File')
