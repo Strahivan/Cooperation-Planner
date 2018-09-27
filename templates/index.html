@@ -43,16 +43,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <table id="results">
-                        {% for row in csv %}
-                        <TR>
-                        <TD class="c1"> {{row.status}}</TD>
-                        <TD class="c2">{{row.url}}</TD>
-                        <TD class="c3">{{row.statuscode}}</TD>
-                        <TD class="c4"><{{row.tld}}</TD>
-                        <TD class="c5"><{{row.Inlink}}</TD>
-                        </TR>
-                    {% endfor %}
-                        </table>
+                        {% for row in csvArray %}
+                        <tr>
+                        <td class="c1">{{ row.status }}</td>
+                        <td class="c2">{{ row.url }}</td>
+                        <td class="c3">{{ row.statuscode }}</td>
+                        <td class="c4">{{ row.tld }}</td>
+                        <td class="c5">{{ row.inlink }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>
