@@ -1,11 +1,27 @@
-CREATE DATABASE IF NOT EXISTS urlinput;
-CREATE TABLE IF NOT EXISTS 'urlinput.'url'(
-        'index' INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        'url' varchar(255), statuscode varchar(255),
-        'tld' varchar(255), status varchar(255),
-        'inLink' varchar(255),
-        PRIMARY KEY ('id'));
+--
+-- Table structure for table `url`
+--
 USE urlinput;
-insert into url (url, statuscode, tld, status, inLink) VALUES ( 'cloudwards.net', '200', '.net', 'okay', '0');
-INSERT INTO url VALUES ( 'Facebook.com', '200', '.com', 'okay', '0');
-INSERT INTO url VALUES ( 'Xing.de', '200', '.de', 'okay', '0');
+DROP TABLE IF EXISTS `url`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `url` (
+  `index` bigint(20) DEFAULT NULL,
+  `url` text,
+  `statuscode` bigint(20) DEFAULT NULL,
+  `tld` text,
+  `status` text,
+  `inLink` bigint(20) DEFAULT NULL,
+  KEY `ix_url_index` (`index`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `url`
+--
+
+LOCK TABLES `url` WRITE;
+/*!40000 ALTER TABLE `url` DISABLE KEYS */;
+INSERT INTO `url` VALUES (0,'xing.rs',200,'.rs','okay',0),(1,'steveiva.com',400,'.com','okay',0);
+/*!40000 ALTER TABLE `url` ENABLE KEYS */;
+UNLOCK TABLES;
