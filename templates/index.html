@@ -1,93 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cooperation Planner</title>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <!--<link href="static/css/bootstrap.min.css" rel="stylesheet">-->
-        <link href="static/css/filter.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1> Cooperation Planner</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2 text-center">
-                    <h3> Actions </h3>
-                </div>
-                <div class="col-md-2 text-center">
-                    <button id="inputbutton" class="btn btn-primary"> Upload CSV </button>
-                </div>
-                <div class="col-md-2 text-center">
-                    <button id="topleveldomainfilter" class="btn btn-primary"> Filter Top Level Domain </button>
-                </div>
-                <div class="col-md-2 text-center">
-                    <button id="statuscodefilter" class="btn btn-primary"> Filter Statuscode </button>
-                </div>
-                <div class="col-md-2 text-center">
-                    <button id="exportview" class="btn btn-primary"> Export current view </button>
-                </div>
-                <div class="col-md-2 text-center">
-                    <button id="resetview" class="btn btn-primary"> Remove all filter </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-primary filterable">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Results</h3>
-                            <div class="pull-right">
-                                <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
-                            </div>
-                        </div>
-                        <table class="table">
-                            <thead>
-                              <tr class="filters">
-                                  <th><input class="form-control" scope="col" placeholder="Status" disabled></th>
-                                  <th><input class="form-control" scope="col" placeholder="Url" disabled></th>
-                                  <th><input class="form-control" scope="col" placeholder="Statuscode" disabled></th>
-                                  <th><input class="form-control" scope="col" placeholder="Top Level Domain" disabled></th>
-                                  <th><input class="form-control" scope="col" placeholder="Inlink" disabled></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in csvArray %}
-                            <tr>
-                                <td>{{ row.status }}</td>
-                                <td>{{ row.url }}</td>
-                                <td>{{ row.statuscode }}</td>
-                                <td>{{ row.tld }}</td>
-                                <td>{{ row.inlink }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cooperation Planner</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="static/css/filter.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1> Cooperation Planner</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 text-center">
+            <h3> Actions </h3>
+        </div>
+
+        <div class="col-md-2 text-center">
+            <form id="upload-file" method="post" enctype="multipart/form-data">
+                <input type="file" name="files">
+                <input type="submit" value="Upload File" name="submit">
+            </form>
+        </div>
+
+        <!--
+        <div class="col-md-2 text-center">
+            <button id="topLevelDomainFilter" class="btn btn-primary"> Filter Top Level Domain </button>
+        </div>
+        <div class="col-md-2 text-center">
+            <button id="statusCodeFilter" class="btn btn-primary"> Filter Statuscode </button>
+        </div>
+        <div class="col-md-2 text-center">
+            <button id="exportView" class="btn btn-primary"> Export current view </button>
+        </div>
+        <div class="col-md-2 text-center">
+            <button id="resetView" class="btn btn-primary"> Remove all filter </button>
+        </div>-->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Results</h3>
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-xs btn-filter"><span
+                                class="glyphicon glyphicon-filter"></span> Filter
+                        </button>
                     </div>
                 </div>
+                <table class="table">
+                    <thead>
+                    <tr class="filters">
+                        <th><input class="form-control" scope="col" placeholder="Status" disabled></th>
+                        <th><input class="form-control" scope="col" placeholder="Url" disabled></th>
+                        <th><input class="form-control" scope="col" placeholder="Statuscode" disabled></th>
+                        <th><input class="form-control" scope="col" placeholder="Top Level Domain" disabled></th>
+                        <th><input class="form-control" scope="col" placeholder="Inlink" disabled></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in csvArray %}
+                    <tr>
+                        <td>{{ row.status }}</td>
+                        <td>{{ row.url }}</td>
+                        <td>{{ row.statuscode }}</td>
+                        <td>{{ row.tld }}</td>
+                        <td>{{ row.inlink }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </body>
-        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script src="static/js/readfiles.js"></script>
-        <script src="static/js/eventhandlers.js"></script>-->
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-        <script src="static/js/filter.js"></script>
-        <script type=text/javascript>
-        $(function() {
-          $('button#inputbutton').bind('click', function() {
-            $.getJSON('/input_File',
-                function(data) {
-              //do nothing
-            });
-            return false;
-          });
-        });
-</script>
+    </div>
+</div>
+</body>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="static/js/filter.js"></script>
+<script src="static/js/upload.js"></script>
 </html>
