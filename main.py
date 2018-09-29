@@ -28,14 +28,5 @@ def upload_file():
     dp.to_sql('url', engine, if_exists='replace')
     return "nothing"
 
-
-# hier muss dann noch aus dem datahandler die entsprechenden Methoden aufgerufen werden, die die datenbank betreffen.
-
-# Ausserdem muss in der View angepasst werden also der helloworld Methode dass Parameter als Liste in diesem Fall aus der DB mitgegeben und angezeigt werden
-
-# Somit muss auch HTML angepasst werden (also die index.html)
-
-# Ausserdem solltest du noch ein MYSQL-Skript schreiben, dass bei installation der App ausgefuehrt wird)
-
 if __name__ == '__main__':
     app.run(debug=True)
