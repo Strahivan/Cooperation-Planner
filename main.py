@@ -25,7 +25,7 @@ def hello_world():
 def upload_file():
     requestFile = request.files['files']
     dp = pd.read_csv(requestFile)
-    dp.to_sql('url', engine, if_exists='replace')
+    dp.to_sql('url', engine, if_exists='append')
     return "nothing"
 
 if __name__ == '__main__':
