@@ -1,8 +1,10 @@
 import json
-
+import urllib
 import pandas as pd
 from flask import Flask, render_template, request
 from sqlalchemy import create_engine
+from urlparse import urlparse
+
 
 from model.csvdata import Csv
 
@@ -25,7 +27,12 @@ def hello_world():
 def upload_file():
     requestFile = request.files['files']
     dp = pd.read_csv(requestFile)
-    dp.to_sql('url', engine, if_exists='append')
+    for x in dp['url']:
+        parsedurl = urlparse(x).netloc
+        #dp.set_value('url', x, parsedurl)
+    # have to figure out how to replace a given value at a panda dataframe
+    print dp
+    #dp.to_sql('url', engine, if_exists='append')
     return "nothing"
 
 if __name__ == '__main__':
