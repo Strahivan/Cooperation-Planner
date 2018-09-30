@@ -1,20 +1,5 @@
 $(document).ready(function(){
-    console.log('test');
-    $('.filterable .btn-filter').click(function(){
-        var $panel = $(this).parents('.filterable'),
-        $filters = $panel.find('.filters input'),
-        $tbody = $panel.find('.table tbody');
-        if ($filters.prop('disabled') == true) {
-            $filters.prop('disabled', false);
-            $filters.first().focus();
-        } else {
-            $filters.val('').prop('disabled', true);
-            $tbody.find('.no-result').remove();
-            $tbody.find('tr').show();
-        }
-    });
-
-    $('.filterable .filters input').keyup(function(e){
+    $('.filterable .data_table .filters input').keyup(function(e){
         /* Ignore tab key */
         var code = e.keyCode || e.which;
         if (code == '9') return;
@@ -22,8 +7,8 @@ $(document).ready(function(){
         var $input = $(this),
         inputContent = $input.val().toLowerCase(),
         $panel = $input.parents('.filterable'),
-        column = $panel.find('.filters th').index($input.parents('th')),
-        $table = $panel.find('.table'),
+        column = $panel.find('.data_table .filters th').index($input.parents('th')),
+        $table = $panel.find('.data_table .table'),
         $rows = $table.find('tbody tr');
         /* Dirtiest filter function ever ;) */
         var $filteredRows = $rows.filter(function(){

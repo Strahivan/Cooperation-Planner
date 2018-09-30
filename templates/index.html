@@ -54,19 +54,19 @@
                         </button>
                     </div>
                 </div>
-                <div id="data_table"></div>
+                <div class="data_table"></div>
             </div>
         </div>
     </div>
 </div>
 </body>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="static/js/filter.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="static/js/filter_button.js"></script>
 <script src="static/js/upload.js"></script>
 <script>
 $( document ).ready(function() {
-    $("#data_table").load("/data");
+    $(".data_table").load("/data");
 });
 </script>
 </html>

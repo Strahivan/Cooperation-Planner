@@ -1,6 +1,5 @@
 import httplib
 import json
-from urlparse import urlparse
 
 import pandas as pd
 from flask import Flask, render_template, request
@@ -9,8 +8,6 @@ from sqlalchemy import create_engine
 from model.csvdata import Csv
 
 app = Flask(__name__)
-
-app.config.from_pyfile('database.cfg')
 engine = create_engine('mysql+mysqlconnector://root:iAmGod!4Sure@localhost:3306/urlinput')
 
 
@@ -34,13 +31,8 @@ def upload_file():
     csv_array = __parse_csv_to_model(dp)
 
     for csv_obj in csv_array:
-        # TODO: This method needs to be implemented in csvdata.py (checkStatusCode)
-        if csv_obj.statuscode == 404:
-            print csv_obj.statuscode
-        else:
-            # TODO: This method needs to be implemented in csvdata.py (splitURL)
-            parsedurl = urlparse(csv_obj.url).netloc
-            dp['url'] = dp['url'].replace([csv_obj.url], parsedurl)
+        dp['url'] = dp['url'].replace([csv_obj.url], csv_obj.split_url())
+
     dp.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
 
