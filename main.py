@@ -27,12 +27,11 @@ def hello_world():
 def upload_file():
     requestFile = request.files['files']
     dp = pd.read_csv(requestFile)
+    #indexdata = 0
     for x in dp['url']:
         parsedurl = urlparse(x).netloc
-        #dp.set_value('url', x, parsedurl)
-    # have to figure out how to replace a given value at a panda dataframe
-    print dp
-    #dp.to_sql('url', engine, if_exists='append')
+        dp['url'] = dp['url'].replace([x],parsedurl)
+    dp.to_sql('url', engine, if_exists='append')
     return "nothing"
 
 if __name__ == '__main__':
