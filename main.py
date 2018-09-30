@@ -1,3 +1,4 @@
+import httplib
 import json
 from urlparse import urlparse
 
@@ -14,32 +15,40 @@ engine = create_engine('mysql+mysqlconnector://root:iAmGod!4Sure@localhost:3306/
 
 
 @app.route('/')
-def hello_world():
-    # this needs to update in realtime too and deliver some parameters
+def index():
+    return render_template('index.html')
+
+
+@app.route('/data')
+def data_table():
+    # this needs to update in real time too and deliver some parameters
     dp = pd.read_sql_table('url', engine)
-    json_output = dp.to_json(orient='records')
-    csvarray = [Csv(**k) for k in json.loads(json_output)]
-    return render_template('index.html', csvArray=csvarray)
+    csv_array = __parse_csv_to_model(dp)
+    return render_template('table.html', csvArray=csv_array)
 
 
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
-    requestFile = request.files['files']
-    dp = pd.read_csv(requestFile)
+    request_file = request.files['files']
+    dp = pd.read_csv(request_file)
+    csv_array = __parse_csv_to_model(dp)
 
-    json_output = dp.to_json(orient='records')
-    csvarray = [Csv(**k) for k in json.loads(json_output)]
-
-    for y in csvarray:
+    for csv_obj in csv_array:
         # TODO: This method needs to be implemented in csvdata.py (checkStatusCode)
-        if y.statuscode == 404:
-            print y.statuscode
+        if csv_obj.statuscode == 404:
+            print csv_obj.statuscode
         else:
             # TODO: This method needs to be implemented in csvdata.py (splitURL)
-            parsedurl = urlparse(y.url).netloc
-            dp['url'] = dp['url'].replace([y.url], parsedurl)
+            parsedurl = urlparse(csv_obj.url).netloc
+            dp['url'] = dp['url'].replace([csv_obj.url], parsedurl)
     dp.to_sql('url', engine, if_exists='append', index=False)
-    return "nothing"
+    return '', httplib.NO_CONTENT
+
+
+def __parse_csv_to_model(dp):
+    json_output = dp.to_json(orient='records')
+    return [Csv(**k) for k in json.loads(json_output)]
+
 
 if __name__ == '__main__':
     app.run(debug=True)

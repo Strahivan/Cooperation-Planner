@@ -1,0 +1,22 @@
+<table class="table">
+    <thead>
+    <tr class="filters">
+        <th><input class="form-control" scope="col" placeholder="Status" disabled></th>
+        <th><input class="form-control" scope="col" placeholder="Url" disabled></th>
+        <th><input class="form-control" scope="col" placeholder="Statuscode" disabled></th>
+        <th><input class="form-control" scope="col" placeholder="Top Level Domain" disabled></th>
+        <th><input class="form-control" scope="col" placeholder="Inlink" disabled></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in csvArray %}
+    <tr>
+        <td>{{ row.status }}</td>
+        <td>{{ row.url }}</td>
+        <td>{{ row.statuscode }}</td>
+        <td>{{ row.tld }}</td>
+        <td>{{ row.inlink }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

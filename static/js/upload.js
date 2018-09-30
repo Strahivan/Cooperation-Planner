@@ -14,7 +14,7 @@ form.addEventListener('submit', e => {
         cache: false,
         processData: false,
         success: function(data) {
-            console.log('Success!');
+            $("#data_table").load("/data");
     },
    });
 });
