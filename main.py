@@ -32,9 +32,11 @@ def upload_file():
     csvarray = [Csv(**k) for k in json.loads(json_output)]
 
     for y in csvarray:
+        # TODO: This method needs to be implemented in csvdata.py (checkStatusCode)
         if y.statuscode == 404:
             print y.statuscode
         else:
+            # TODO: This method needs to be implemented in csvdata.py (splitURL)
             parsedurl = urlparse(y.url).netloc
             dp['url'] = dp['url'].replace([y.url], parsedurl)
     dp.to_sql('url', engine, if_exists='append', index=False)
