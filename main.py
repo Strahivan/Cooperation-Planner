@@ -37,7 +37,7 @@ def upload_file():
         else:
             parsedurl = urlparse(y.url).netloc
             dp['url'] = dp['url'].replace([y.url], parsedurl)
-    dp.to_sql('url', engine, if_exists='append')
+    dp.to_sql('url', engine, if_exists='append', index=False)
     return "nothing"
 
 

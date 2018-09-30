@@ -6,13 +6,13 @@ DROP TABLE IF EXISTS `url`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `url` (
-  `index` bigint(20) DEFAULT NULL,
+  `index` bigint(20) AUTO_INCREMENT,
   `url` text,
   `statuscode` bigint(20) DEFAULT NULL,
   `tld` text,
   `status` text,
   `inLink` bigint(20) DEFAULT NULL,
-  KEY `ix_url_index` (`index`)
+  PRIMARY KEY ('index')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
