@@ -2,7 +2,7 @@ import json
 from urlparse import urlparse
 
 import pandas as pd
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 
 from model.csvdata import Csv
@@ -26,7 +26,6 @@ def hello_world():
 def upload_file():
     requestFile = request.files['files']
     dp = pd.read_csv(requestFile)
-    # indexdata = 0
 
     json_output = dp.to_json(orient='records')
     csvarray = [Csv(**k) for k in json.loads(json_output)]
@@ -40,7 +39,7 @@ def upload_file():
             parsedurl = urlparse(y.url).netloc
             dp['url'] = dp['url'].replace([y.url], parsedurl)
     dp.to_sql('url', engine, if_exists='append', index=False)
-    return "nothing"
+    return redirect(url_for('hello_world'))
 
 
 if __name__ == '__main__':
