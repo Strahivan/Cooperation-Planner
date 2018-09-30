@@ -1,10 +1,9 @@
 import json
-import urllib
+from urlparse import urlparse
+
 import pandas as pd
 from flask import Flask, render_template, request
 from sqlalchemy import create_engine
-from urlparse import urlparse
-
 
 from model.csvdata import Csv
 
@@ -27,12 +26,20 @@ def hello_world():
 def upload_file():
     requestFile = request.files['files']
     dp = pd.read_csv(requestFile)
-    #indexdata = 0
-    for x in dp['url']:
-        parsedurl = urlparse(x).netloc
-        dp['url'] = dp['url'].replace([x],parsedurl)
+    # indexdata = 0
+
+    json_output = dp.to_json(orient='records')
+    csvarray = [Csv(**k) for k in json.loads(json_output)]
+
+    for y in csvarray:
+        if y.statuscode == 404:
+            print y.statuscode
+        else:
+            parsedurl = urlparse(y.url).netloc
+            dp['url'] = dp['url'].replace([y.url], parsedurl)
     dp.to_sql('url', engine, if_exists='append')
     return "nothing"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
