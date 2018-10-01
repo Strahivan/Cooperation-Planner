@@ -1,15 +1,29 @@
 $(document).ready(function(){
-    $('.filterable .btn-filter').click(function(){
+    $('.filterable .btn-open-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
         $filters = $panel.find('.data_table .filters input'),
-        $tbody = $panel.find('.data_table .table tbody');
+        $t_body = $panel.find('.data_table .table tbody'),
+        $create_filter = $panel.find('.btn-create-filter');
         if ($filters.prop('disabled') == true) {
             $filters.prop('disabled', false);
+            $create_filter.prop('disabled', false)
             $filters.first().focus();
         } else {
             $filters.val('').prop('disabled', true);
-            $tbody.find('.no-result').remove();
-            $tbody.find('tr').show();
+            $create_filter.prop('disabled', true)
+            $t_body.find('.no-result').remove();
+            $t_body.find('tr').show();
         }
+    });
+
+    $('.filterable .btn-create-filter').click(function(){
+        var $panel = $(this).parents('.filterable'),
+            $status = $panel.find('#status'),
+            $url = $panel.find('#url'),
+            $statuscode = $panel.find('#statuscode'),
+            $tld = $panel.find('#tld'),
+            $inLink = $panel.find('#inLink');
+            $(".data_table").load("/filter?status="+ $status.val() + '&url=' + $url.val() +
+                    '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
     });
 });

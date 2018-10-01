@@ -9,7 +9,7 @@ class Csv:
         self.status = status
         self.url = url
         self.tld = tld
-        self.inlink = inLink
+        self.inLink = inLink
         self.statuscode = statuscode
 
     def split_url(self):

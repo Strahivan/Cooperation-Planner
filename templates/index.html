@@ -25,23 +25,8 @@
             <form id="upload-file" method="post" enctype="multipart/form-data">
                 <input type="file" name="files">
                 <input type="submit" value="Upload File" name="submit">
-                <!--<input type="submit" value="Upload File" name="submit" onClick="history.go(0)"> -->
             </form>
         </div>
-
-        <!--
-        <div class="col-md-2 text-center">
-            <button id="topLevelDomainFilter" class="btn btn-primary"> Filter Top Level Domain </button>
-        </div>
-        <div class="col-md-2 text-center">
-            <button id="statusCodeFilter" class="btn btn-primary"> Filter Statuscode </button>
-        </div>
-        <div class="col-md-2 text-center">
-            <button id="exportView" class="btn btn-primary"> Export current view </button>
-        </div>
-        <div class="col-md-2 text-center">
-            <button id="resetView" class="btn btn-primary"> Remove all filter </button>
-        </div>-->
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -49,8 +34,11 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Results</h3>
                     <div class="pull-right">
-                        <button class="btn btn-default btn-xs btn-filter"><span
-                                class="glyphicon glyphicon-filter"></span> Filter
+                        <button class="btn btn-default btn-xs btn-open-filter">
+                            <span class="glyphicon glyphicon-filter"></span>Open Filtering
+                        </button>
+                        <button class="btn btn-default btn-xs btn-create-filter" disabled>
+                            Create Filter
                         </button>
                     </div>
                 </div>

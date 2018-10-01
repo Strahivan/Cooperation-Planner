@@ -24,6 +24,14 @@ def data_table():
     return render_template('table.html', csvArray=csv_array)
 
 
+@app.route('/filter')
+def filter_data_table():
+    sql_query = __get_sql_query()
+    dp = pd.read_sql_query(sql_query, engine)
+    csv_array = __parse_csv_to_model(dp)
+    return render_template('table.html', csvArray=csv_array)
+
+
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
     request_file = request.files['files']
@@ -40,6 +48,30 @@ def upload_file():
 def __parse_csv_to_model(dp):
     json_output = dp.to_json(orient='records')
     return [Csv(**k) for k in json.loads(json_output)]
+
+
+def __get_sql_query():
+    csv_filter = Csv(str(request.args['status']),
+                     str(request.args['url']),
+                     str(request.args['tld']),
+                     str(request.args['inLink']),
+                     str(request.args['statuscode']))
+
+    sql = 'SELECT * FROM url'
+    where_string = ' {} = "{}" '
+    where_digit = ' {} = {} '
+    key_value_pairs = []
+
+    count = 0
+    for key, value in csv_filter.__dict__.iteritems():
+        if count == 0:
+            sql = sql + ' WHERE'
+        if value is not None and value.isdigit():
+            key_value_pairs.append(where_digit.format(key, value))
+        elif value is not '' and value is not None:
+            key_value_pairs.append(where_string.format(key, value))
+        count += 1
+    return sql + ' AND'.join(key_value_pairs)
 
 
 if __name__ == '__main__':
