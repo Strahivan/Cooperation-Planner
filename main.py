@@ -2,10 +2,11 @@ import httplib
 import json
 
 import pandas as pd
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from sqlalchemy import create_engine
 
 from model.csvdata import Csv
+from util.query_builder import Builder
 
 app = Flask(__name__)
 engine = create_engine('mysql+mysqlconnector://root:iAmGod!4Sure@localhost:3306/urlinput')
@@ -45,6 +46,17 @@ def upload_file():
     return '', httplib.NO_CONTENT
 
 
+@app.route('/generate_csv')
+def generate_csv():
+    dp = pd.read_sql_query('SELECT * FROM url', engine)
+    csv_file = pd.DataFrame.to_csv(dp)
+    response = make_response(csv_file)
+    cd = 'attachment; filename=mycsv.csv'
+    response.headers['Content-Disposition'] = cd
+    response.mimetype = 'text/csv'
+    return response
+
+
 def __parse_csv_to_model(dp):
     json_output = dp.to_json(orient='records')
     return [Csv(**k) for k in json.loads(json_output)]
@@ -57,21 +69,19 @@ def __get_sql_query():
                      str(request.args['inLink']),
                      str(request.args['statuscode']))
 
-    sql = 'SELECT * FROM url'
-    where_string = ' {} = "{}" '
-    where_digit = ' {} = {} '
-    key_value_pairs = []
+    builder = Builder('*')
+    builder.from_table('url')
 
     count = 0
     for key, value in csv_filter.__dict__.iteritems():
-        if count == 0:
-            sql = sql + ' WHERE'
-        if value is not None and value.isdigit():
-            key_value_pairs.append(where_digit.format(key, value))
-        elif value is not '' and value is not None:
-            key_value_pairs.append(where_string.format(key, value))
-        count += 1
-    return sql + ' AND'.join(key_value_pairs)
+        if value is not None and value is not '':
+            if count == 0:
+                builder.where(key, value)
+            else:
+                builder.and_where(key, value)
+            count += 1
+
+    return builder.build()
 
 
 if __name__ == '__main__':

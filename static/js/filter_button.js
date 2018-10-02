@@ -18,11 +18,13 @@ $(document).ready(function(){
 
     $('.filterable .btn-create-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
+            $create_filter = $panel.find('.btn-create-filter');
             $status = $panel.find('#status'),
             $url = $panel.find('#url'),
             $statuscode = $panel.find('#statuscode'),
             $tld = $panel.find('#tld'),
             $inLink = $panel.find('#inLink');
+            $create_filter.prop('disabled', true)
             $(".data_table").load("/filter?status="+ $status.val() + '&url=' + $url.val() +
                     '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
     });

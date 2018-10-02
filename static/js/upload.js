@@ -15,6 +15,6 @@ form.addEventListener('submit', e => {
         processData: false,
         success: function(data) {
             $(".data_table").load("/data");
-    },
+    }
    });
 });
