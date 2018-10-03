@@ -5,9 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cooperation Planner</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="static/css/filter.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -15,51 +13,104 @@
         <div class="col-md-12 text-center">
             <h1> Cooperation Planner</h1>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 text-center">
-            <h3> Actions </h3>
-        </div>
-
-        <div class="col-md-2 text-center">
-            <form id="upload-file" method="post" enctype="multipart/form-data">
-                <input type="file" name="files">
-                <input type="submit" value="Upload File" name="submit">
-            </form>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary filterable">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Results</h3>
-                    <div class="pull-right">
-                        <button class="btn btn-default btn-xs btn-open-filter">
-                            <span class="glyphicon glyphicon-filter"></span>Open Filtering
-                        </button>
-                        <button class="btn btn-default btn-xs btn-create-filter" disabled>
-                            Create Filter
-                        </button>
-                        <a href="/generate_csv" target="_blank">
-                            <button class="btn btn-default btn-xs btn-csv">
-                                Generate CSV
-                            </button>
-                        </a>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h3 class="panel-title">Actions</h3>
+                            </div>
+                            <div class="col-sm">
+                                <div class="float-right">
+                                    <form id="upload-file" method="post" enctype="multipart/form-data">
+                                        <input type="file" name="files">
+                                        <input type="submit" value="Upload File" name="submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <h3 class="panel-title">Results</h3>
+                            </div>
+                            <div class="col-sm">
+                                <div class="float-right">
+                                    <button class="btn btn-default btn-xs btn-open-filter" data-toggle="modal"
+                                            data-target="#filterModal">
+                                        <span class="glyphicon glyphicon-filter"></span>Open Filtering
+                                    </button>
+                                    <button class="btn btn-default btn-xs btn-csv">
+                                        Generate CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data_table"></div>
                     </div>
                 </div>
-                <div class="data_table"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="filterModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Filter</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Status</span>
+                    </div>
+                    <input id="status" type="text" class="form-control" aria-label="Default"
+                           aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Url</span>
+                    </div>
+                    <input id="url" type="text" class="form-control" aria-label="Default"
+                           aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Statuscode</span>
+                    </div>
+                    <input id="statuscode" type="text" class="form-control" aria-label="Default"
+                           aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Top Level Domain</span>
+                    </div>
+                    <input id="tld" type="text" class="form-control" aria-label="Default"
+                           aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">InLink</span>
+                    </div>
+                    <input id="inLink" type="text" class="form-control" aria-label="Default"
+                           aria-describedby="inputGroup-sizing-default">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveFilter" type="button" class="btn btn-primary" data-dismiss="modal">
+                    Save filter
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
 </div>
 </body>
-<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="static/js/filter_button.js"></script>
-<script src="static/js/upload.js"></script>
-<script>
-$( document ).ready(function() {
-    $(".data_table").load("/data");
-});
-</script>
+<script src="static/js/jquery-3.3.1.min.js"></script>
+<script src="static/js/popper.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/custom.js"></script>
 </html>

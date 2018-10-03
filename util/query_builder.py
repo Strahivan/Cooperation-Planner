@@ -18,15 +18,15 @@ class Builder(object):
         if value.isdigit():
             self.__where = ' WHERE {} = {}'.format(key, value)
         else:
-            self.__where = ' WHERE {} = "{}"'.format(key, value)
+            self.__where = ' WHERE {} LIKE "%{}%"'.format(key, value)
         return self
 
     def and_where(self, key, value):
         if value.isdigit():
             self.__and.append(' AND {} = {}'.format(key, value))
         else:
-            self.__and.append(' AND {} = "{}"'.format(key, value))
+            self.__and.append(' AND {} LIKE "%{}%"'.format(key, value))
         return self
 
     def build(self):
-        return self.__select + self.__from + self.__where + ''.join(self.__and)
+        return self.__select + self.__from + (self.__where or '') + ''.join(self.__and)

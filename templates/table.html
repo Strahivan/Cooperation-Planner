@@ -1,11 +1,11 @@
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
     <tr class="filters">
-        <th><input id="status" class="form-control" scope="col" placeholder="Status" disabled></th>
-        <th><input id="url" class="form-control" scope="col" placeholder="Url" disabled></th>
-        <th><input id="statuscode" class="form-control" scope="col" placeholder="Statuscode" disabled></th>
-        <th><input id="tld" class="form-control" scope="col" placeholder="Top Level Domain" disabled></th>
-        <th><input id="inLink" class="form-control" scope="col" placeholder="Inlink" disabled></th>
+        <th>Status</th>
+        <th>Url</th>
+        <th>Statuscode</th>
+        <th>TLD</th>
+        <th>Inlink</th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
         <td>{{ row.url }}</td>
         <td>{{ row.statuscode }}</td>
         <td>{{ row.tld }}</td>
-        <td>{{ row.inlink }}</td>
+        <td>{{ row.inLink }}</td>
     </tr>
     {% endfor %}
     </tbody>
