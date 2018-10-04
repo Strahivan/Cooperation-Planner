@@ -49,7 +49,8 @@ def upload_file():
 # Todo return current table on index.html
 @app.route('/generate_csv')
 def generate_csv():
-    dp = pd.read_sql_query('SELECT url, statuscode, tld, status, inLink FROM url', engine)
+    sql_query = __get_sql_query()
+    dp = pd.read_sql_query(sql_query, engine)
     csv_file = pd.DataFrame.to_csv(dp)
     response = make_response(csv_file)
     cd = 'attachment; filename=mycsv.csv'

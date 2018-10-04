@@ -12,10 +12,18 @@ $(document).ready(function(){
                     '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
     });
     $('.btn-csv').click(function(){
-        $.get( "/generate_csv", function( csv ) {
+        var $filterPanel = $('#filterModal'),
+            $status = $filterPanel.find('#status'),
+            $url = $filterPanel.find('#url'),
+            $statuscode = $filterPanel.find('#statuscode'),
+            $tld = $filterPanel.find('#tld'),
+            $inLink = $filterPanel.find('#inLink');
+
+        $.get( "/generate_csv?status="+ $status.val() + '&url=' + $url.val() +
+             '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val(), function( csv ) {
          var $a = $('<a />', {
               'href': 'data:text/csv;charset=utf-8,' + encodeURI(csv),
-              'download': 'csv.csv',
+              'download': 'plot.csv',
               'text': "click"
             }).hide().appendTo("body")[0].click();
         });
