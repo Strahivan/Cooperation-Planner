@@ -4,8 +4,8 @@ from urlparse import urlparse
 class Csv:
     'Common base class for all csv input'
 
-    def __init__(self, status, url, tld, inLink, statuscode, index=None):
-        self.index = index
+    def __init__(self, status, url, tld, inLink, statuscode, id=None):
+        self.id = id
         self.status = status
         self.url = url
         self.tld = tld

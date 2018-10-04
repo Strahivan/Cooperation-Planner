@@ -3,13 +3,24 @@ import json
 
 import pandas as pd
 from flask import Flask, render_template, request, make_response
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 
 from model.csvdata import Csv
 from util.query_builder import Builder
 
 app = Flask(__name__)
-engine = create_engine('mysql+mysqlconnector://root:iAmGod!4Sure@localhost:3306/urlinput')
+metadata = MetaData()
+engine = create_engine('sqlite:///database/database.db')
+if not engine.dialect.has_table(engine, 'url'):
+    metadata = MetaData(engine)
+    url = Table('url', metadata,
+                Column('id', Integer, primary_key=True, autoincrement=1),
+                Column('url', String(4000), nullable=True),
+                Column('statuscode', Integer, nullable=True),
+                Column('tld', String(128), nullable=True),
+                Column('status', String(128), nullable=True),
+                Column('inLink', Integer, nullable=True))
+    url.create(engine)
 
 
 @app.route('/')
