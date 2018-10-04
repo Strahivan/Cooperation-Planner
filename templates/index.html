@@ -6,47 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cooperation Planner</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link href="static/css/datatables.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h1> Cooperation Planner</h1>
+            <p>
+            <h1> Cooperation Planner</h1></p>
         </div>
         <div class="col-md-12">
             <div class="panel panel-primary filterable">
                 <div class="panel-heading">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm">
-                                <h3 class="panel-title">Actions</h3>
-                            </div>
-                            <div class="col-sm">
-                                <div class="float-right">
-                                    <form id="upload-file" method="post" enctype="multipart/form-data">
-                                        <input type="file" name="files">
-                                        <input type="submit" value="Upload File" name="submit">
+                            <div class="col-6">
+                                <div style="float: left;margin-top: 5px;margin-left: 15px;">
+                                    <form style="margin-top: 10px;" class="float-right" id="upload-file" method="post"
+                                          enctype="multipart/form-data">
+                                        <div class="row">
+                                            <input type="file" name="files">
+                                            <input type="submit" value="Upload File" name="submit">
+                                        </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <h3 class="panel-title">Results</h3>
+                            <div class="col">
+                                <button class="btn btn-default btn-xs btn-open-filter w-100 p-3" data-toggle="modal"
+                                        data-target="#filterModal">
+                                    <span class="glyphicon glyphicon-filter"></span>Open Filtering
+                                </button>
                             </div>
-                            <div class="col-sm">
-                                <div class="float-right">
-                                    <button class="btn btn-default btn-xs btn-open-filter" data-toggle="modal"
-                                            data-target="#filterModal">
-                                        <span class="glyphicon glyphicon-filter"></span>Open Filtering
-                                    </button>
-                                    <button class="btn btn-default btn-xs btn-csv">
-                                        Generate CSV
-                                    </button>
-                                </div>
+                            <div class="col">
+                                <button class="btn btn-default btn-xs btn-csv w-100 p-3">
+                                    Generate CSV
+                                </button>
                             </div>
                         </div>
-                        <input class="form-control" id="search_table" type="text" placeholder="Search..">
                         <div class="data_table"></div>
                     </div>
                 </div>
@@ -113,5 +109,6 @@
 <script src="static/js/jquery-3.3.1.min.js"></script>
 <script src="static/js/popper.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/datatables.min.js"></script>
 <script src="static/js/custom.js"></script>
 </html>

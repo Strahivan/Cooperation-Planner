@@ -1,26 +1,12 @@
 import httplib
-import json
 
 import pandas as pd
 from flask import Flask, render_template, request, make_response
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 
-from model.csvdata import Csv
-from util.query_builder import Builder
+from database.database import engine, get_sql_query
+from model.csvdata import parse_csv_to_model
 
 app = Flask(__name__)
-metadata = MetaData()
-engine = create_engine('sqlite:///database/database.db')
-if not engine.dialect.has_table(engine, 'url'):
-    metadata = MetaData(engine)
-    url = Table('url', metadata,
-                Column('id', Integer, primary_key=True, autoincrement=1),
-                Column('url', String(4000), nullable=True),
-                Column('statuscode', Integer, nullable=True),
-                Column('tld', String(128), nullable=True),
-                Column('status', String(128), nullable=True),
-                Column('inLink', Integer, nullable=True))
-    url.create(engine)
 
 
 @app.route('/')
@@ -32,15 +18,15 @@ def index():
 def data_table():
     # this needs to update in real time too and deliver some parameters
     dp = pd.read_sql_table('url', engine)
-    csv_array = __parse_csv_to_model(dp)
+    csv_array = parse_csv_to_model(dp)
     return render_template('table.html', csvArray=csv_array)
 
 
 @app.route('/filter')
 def filter_data_table():
-    sql_query = __get_sql_query()
+    sql_query = get_sql_query()
     dp = pd.read_sql_query(sql_query, engine)
-    csv_array = __parse_csv_to_model(dp)
+    csv_array = parse_csv_to_model(dp)
     return render_template('table.html', csvArray=csv_array)
 
 
@@ -48,7 +34,7 @@ def filter_data_table():
 def upload_file():
     request_file = request.files['files']
     dp = pd.read_csv(request_file)
-    csv_array = __parse_csv_to_model(dp)
+    csv_array = parse_csv_to_model(dp)
 
     for csv_obj in csv_array:
         dp['url'] = dp['url'].replace([csv_obj.url], csv_obj.split_url())
@@ -60,7 +46,7 @@ def upload_file():
 # Todo return current table on index.html
 @app.route('/generate_csv')
 def generate_csv():
-    sql_query = __get_sql_query()
+    sql_query = get_sql_query()
     dp = pd.read_sql_query(sql_query, engine)
     csv_file = pd.DataFrame.to_csv(dp)
     response = make_response(csv_file)
@@ -68,33 +54,6 @@ def generate_csv():
     response.headers['Content-Disposition'] = cd
     response.mimetype = 'text/csv'
     return response
-
-
-def __parse_csv_to_model(dp):
-    json_output = dp.to_json(orient='records')
-    return [Csv(**k) for k in json.loads(json_output)]
-
-
-def __get_sql_query():
-    csv_filter = Csv(str(request.args['status']),
-                     str(request.args['url']),
-                     str(request.args['tld']),
-                     str(request.args['inLink']),
-                     str(request.args['statuscode']))
-
-    builder = Builder('*')
-    builder.from_table('url')
-
-    count = 0
-    for key, value in csv_filter.__dict__.iteritems():
-        if value is not None and value is not '':
-            if count == 0:
-                builder.where(key, value)
-            else:
-                builder.and_where(key, value)
-            count += 1
-
-    return builder.build()
 
 
 if __name__ == '__main__':

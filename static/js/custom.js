@@ -1,5 +1,10 @@
 $(document).ready(function(){
-    $(".data_table").load("/data");
+    $(".data_table").load("/data", function() {
+        $('#table_with_pagination').DataTable({
+            "pagingType": "simple"
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
 
     $("#search_table").on("keyup", function() {
         var value = $(this).val().toLowerCase();
