@@ -1,6 +1,13 @@
 $(document).ready(function(){
     $(".data_table").load("/data");
 
+    $("#search_table").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table_body tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+
     $('#saveFilter').click(function(){
         var $filterPanel = $('#filterModal'),
             $status = $filterPanel.find('#status'),
@@ -11,6 +18,7 @@ $(document).ready(function(){
             $(".data_table").load("/filter?status="+ $status.val() + '&url=' + $url.val() +
                     '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
     });
+
     $('.btn-csv').click(function(){
         var $filterPanel = $('#filterModal'),
             $status = $filterPanel.find('#status'),
