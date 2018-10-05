@@ -4,6 +4,7 @@ from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 from model.csvdata import Csv
 from util.query_builder import Builder
 
+# TODO: adjust DB-Structure for new DB-Fields of Amazon
 metadata = MetaData()
 engine = create_engine('sqlite:///database/database.db')
 if not engine.dialect.has_table(engine, 'url'):
@@ -17,7 +18,7 @@ if not engine.dialect.has_table(engine, 'url'):
                 Column('inLink', Integer, nullable=True))
     url.create(engine)
 
-
+# TODO: adjust get-method for new DB-Fields of Amazon
 def get_sql_query():
     csv_filter = Csv(str(request.args['status']),
                      str(request.args['url']),

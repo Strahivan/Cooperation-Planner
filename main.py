@@ -1,8 +1,6 @@
 import httplib
-
 import pandas as pd
 from flask import Flask, render_template, request, make_response
-
 from database.database import engine, get_sql_query
 from model.csvdata import parse_csv_to_model
 
