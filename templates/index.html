@@ -19,96 +19,84 @@
             <div class="panel panel-primary filterable">
                 <div class="panel-heading">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-6">
-                                <div style="float: left;margin-top: 5px;margin-left: 15px;">
-                                    <form style="margin-top: 10px;" class="float-right" id="upload-file" method="post"
-                                          enctype="multipart/form-data">
-                                        <div class="row">
-                                            <input type="file" name="files">
-                                            <input type="submit" value="Upload File" name="submit">
+                        <fieldset style="padding: 0 10px" class="border border-dark mt-4">
+                            <legend style="width: 12%;" class="scheduler-border">Upload File</legend>
+                            <div class="m-2">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div style="float: left;margin-top: 5px;margin-left: 15px;">
+                                            <form class="float-right" id="upload-file" method="post"
+                                                  enctype="multipart/form-data">
+                                                <div class="row">
+                                                    <input type="file" name="files">
+                                                    <input type="submit" value="Upload File" name="submit">
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-default btn-xs btn-csv w-100">
+                                            Export Data
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <button class="btn btn-default btn-xs btn-open-filter w-100 p-3" data-toggle="modal"
-                                        data-target="#filterModal">
-                                    <span class="glyphicon glyphicon-filter"></span>Open Filtering
-                                </button>
+                        </fieldset>
+                        <fieldset id="filterFieldSet" style="padding: 0 10px" class="border border-dark mt-4">
+                            <legend style="width: 5%;" class="scheduler-border">Filter</legend>
+                            <div class="m-2">
+                                <div class="row mt-2">
+                                    <div class="input-group col-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Status</span>
+                                        </div>
+                                        <input id="status" type="text" class="form-control">
+                                    </div>
+                                    <div class="input-group col-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Url</span>
+                                        </div>
+                                        <input id="url" type="text" class="form-control">
+                                    </div>
+                                    <div class="input-group col-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Statuscode</span>
+                                        </div>
+                                        <input id="statuscode" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="input-group col-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Top Level Domain</span>
+                                        </div>
+                                        <input id="tld" type="text" class="form-control">
+                                    </div>
+                                    <div class="input-group col-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">InLink</span>
+                                        </div>
+                                        <input id="inLink" type="text" class="form-control" aria-label="Default"
+                                               aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    <div class="input-group col-4">
+                                        <button id="saveFilter" type="button" class="btn btn-primary w-100">
+                                            Save Filter
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <button class="btn btn-default btn-xs btn-csv w-100 p-3">
-                                    Export Data
-                                </button>
-                            </div>
-                        </div>
-                        <div class="data_table"></div>
+                        </fieldset>
+                        <div class="data_table mt-4"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="filterModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Filter</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Status</span>
-                    </div>
-                    <input id="status" type="text" class="form-control" aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Url</span>
-                    </div>
-                    <input id="url" type="text" class="form-control" aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Statuscode</span>
-                    </div>
-                    <input id="statuscode" type="text" class="form-control" aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Top Level Domain</span>
-                    </div>
-                    <input id="tld" type="text" class="form-control" aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">InLink</span>
-                    </div>
-                    <input id="inLink" type="text" class="form-control" aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="saveFilter" type="button" class="btn btn-primary" data-dismiss="modal">
-                    Save filter
-                </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
-                </button>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script src="static/js/jquery-3.3.1.min.js"></script>
-<script src="static/js/popper.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <script src="static/js/datatables.min.js"></script>
-<script src="static/js/custom.js"></script>
+<script src="static/js/index.js"></script>
 </html>
