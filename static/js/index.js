@@ -30,6 +30,13 @@ $(document).ready(function(){
         });
     });
 
+    $('.btn-delete').click(function(){
+         $.get( "/delete_db", function(){
+                $(".data_table").load("/data");
+         });
+    });
+
+
     const form = document.querySelector('form');
     form.addEventListener('submit', e => {
 

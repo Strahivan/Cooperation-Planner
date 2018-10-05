@@ -1,6 +1,8 @@
 import httplib
+
 import pandas as pd
 from flask import Flask, render_template, request, make_response
+
 from database.database import engine, get_sql_query
 from model.csvdata import parse_csv_to_model
 
@@ -41,7 +43,6 @@ def upload_file():
     return '', httplib.NO_CONTENT
 
 
-# Todo return current table on index.html
 @app.route('/generate_csv')
 def generate_csv():
     sql_query = get_sql_query()
@@ -52,6 +53,13 @@ def generate_csv():
     response.headers['Content-Disposition'] = cd
     response.mimetype = 'text/csv'
     return response
+
+
+@app.route('/delete_db')
+def delete_db():
+    sql = 'DELETE from url;'
+    engine.execute(sql)
+    return '', httplib.NO_CONTENT
 
 
 if __name__ == '__main__':
