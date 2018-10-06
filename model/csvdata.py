@@ -1,6 +1,8 @@
 import json
 from urlparse import urlparse
 
+from tld import get_tld
+
 
 class Csv:
     '''Common base class for all csv input'''
@@ -19,9 +21,7 @@ class Csv:
         return urlparse(self.url).netloc
 
     def split_tld(self):
-        # method whichs is supposed to cut out the Top-level-domain and create a new column for that
-        # TODO: This method is needs to be implemented
-        return "nothing"
+        return get_tld(self.url)
 
 
 def parse_csv_to_model(dp):

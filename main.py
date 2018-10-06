@@ -38,6 +38,7 @@ def upload_file():
 
     for csv_obj in csv_array:
         dp['url'] = dp['url'].replace([csv_obj.url], csv_obj.split_url())
+        dp['tld'] = dp['tld'].replace([csv_obj.tld], csv_obj.split_tld())
 
     dp.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
