@@ -13,7 +13,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/data')
 def data_table():
     # this needs to update in real time too and deliver some parameters
@@ -58,6 +57,7 @@ def generate_csv():
 
 @app.route('/delete_db')
 def delete_db():
+    # Todo: Source this sql-query out to util/query_builder.py
     sql = 'DELETE from url;'
     engine.execute(sql)
     return '', httplib.NO_CONTENT
