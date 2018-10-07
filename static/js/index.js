@@ -12,6 +12,12 @@ $(document).ready(function(){
                     '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
     });
 
+    $('#resetFilter').click(function(){
+        var $filterPanel = $('#filterFieldSet');
+            $filterPanel.find('input').val('');
+            $(".data_table").load("/filter?status=&url=&statuscode=&tld=&inLink=");
+    });
+
     $('.btn-csv').click(function(){
         var $filterPanel = $('#filterFieldSet'),
             $status = $filterPanel.find('#status'),
