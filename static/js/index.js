@@ -3,31 +3,31 @@ $(document).ready(function(){
 
     $('#saveFilter').click(function(){
         var $filterPanel = $('#filterFieldSet'),
-            $status = $filterPanel.find('#status'),
+            $reach = $filterPanel.find('#reach'),
             $url = $filterPanel.find('#url'),
             $statuscode = $filterPanel.find('#statuscode'),
             $tld = $filterPanel.find('#tld'),
-            $inLink = $filterPanel.find('#inLink');
-            $(".data_table").load("/filter?status="+ $status.val() + '&url=' + $url.val() +
-                    '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val());
+            $globalrank = $filterPanel.find('#globalrank');
+            $(".data_table").load("/filter?reach="+ $reach.val() + '&url=' + $url.val() +
+                    '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&globalrank=' + $globalrank.val());
     });
 
     $('#resetFilter').click(function(){
         var $filterPanel = $('#filterFieldSet');
             $filterPanel.find('input').val('');
-            $(".data_table").load("/filter?status=&url=&statuscode=&tld=&inLink=");
+            $(".data_table").load("/filter?globalrank=&url=&statuscode=&tld=&reach=");
     });
 
     $('.btn-csv').click(function(){
         var $filterPanel = $('#filterFieldSet'),
-            $status = $filterPanel.find('#status'),
+            $reach = $filterPanel.find('#reach'),
             $url = $filterPanel.find('#url'),
             $statuscode = $filterPanel.find('#statuscode'),
             $tld = $filterPanel.find('#tld'),
-            $inLink = $filterPanel.find('#inLink');
+            $globalrank = $filterPanel.find('#globalrank');
 
-        $.get( "/generate_csv?status="+ $status.val() + '&url=' + $url.val() +
-             '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&inLink=' + $inLink.val(), function( csv ) {
+        $.get( "/generate_csv?reach="+ $reach.val() + '&url=' + $url.val() +
+             '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&globalrank=' + $globalrank.val(), function( csv ) {
          var $a = $('<a />', {
               'href': 'data:text/csv;charset=utf-8,' + encodeURI(csv),
               'download': 'plot.csv',

@@ -14,17 +14,18 @@ if not engine.dialect.has_table(engine, 'url'):
                 Column('url', String(4000), nullable=True),
                 Column('statuscode', Integer, nullable=True),
                 Column('tld', String(128), nullable=True),
-                Column('status', String(128), nullable=True),
-                Column('inLink', Integer, nullable=True))
+                Column('reach', Integer, nullable=True),
+                Column('globalrank', Integer, nullable=True))
     url.create(engine)
+
 
 # TODO: adjust get-method for new DB-Fields of Amazon
 def get_sql_query():
-    csv_filter = Csv(str(request.args['status']),
+    csv_filter = Csv(str(request.args['reach']),
                      str(request.args['url']),
                      str(request.args['tld']),
-                     str(request.args['inLink']),
-                     str(request.args['statuscode']))
+                     str(request.args['statuscode']),
+                     str(request.args['globalrank']))
 
     builder = Builder('*')
     builder.from_table('url')

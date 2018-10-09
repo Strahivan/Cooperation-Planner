@@ -4,7 +4,7 @@ import pandas as pd
 from flask import Flask, render_template, request, make_response
 
 from database.database import engine, get_sql_query
-from model.csvdata import parse_csv_to_model
+from model.csvdata import parse_csv_to_model, check_column_with_model
 
 app = Flask(__name__)
 
@@ -13,41 +13,42 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/data')
 def data_table():
-    # this needs to update in real time too and deliver some parameters
-    dp = pd.read_sql_table('url', engine)
-    csv_array = parse_csv_to_model(dp)
+    data_frame = pd.read_sql_table('url', engine)
+    csv_array = parse_csv_to_model(data_frame)
     return render_template('table.html', csvArray=csv_array)
 
 
 @app.route('/filter')
 def filter_data_table():
     sql_query = get_sql_query()
-    dp = pd.read_sql_query(sql_query, engine)
-    csv_array = parse_csv_to_model(dp)
+    data_frame = pd.read_sql_query(sql_query, engine)
+    csv_array = parse_csv_to_model(data_frame)
     return render_template('table.html', csvArray=csv_array)
 
 
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
     request_file = request.files['files']
-    dp = pd.read_csv(request_file)
-    csv_array = parse_csv_to_model(dp)
+    data_frame = check_column_with_model(pd.read_csv(request_file))
+
+    csv_array = parse_csv_to_model(data_frame)
 
     for csv_obj in csv_array:
-        dp['url'] = dp['url'].replace([csv_obj.url], csv_obj.split_url())
-        dp['tld'] = dp['tld'].replace([csv_obj.tld], csv_obj.split_tld())
+        data_frame['url'] = data_frame['url'].replace([csv_obj.url], csv_obj.split_url())
+        data_frame['tld'] = csv_obj.split_tld()
 
-    dp.to_sql('url', engine, if_exists='append', index=False)
+    data_frame.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
 
 
 @app.route('/generate_csv')
 def generate_csv():
     sql_query = get_sql_query()
-    dp = pd.read_sql_query(sql_query, engine)
-    csv_file = pd.DataFrame.to_csv(dp)
+    data_frame = pd.read_sql_query(sql_query, engine)
+    csv_file = pd.DataFrame.to_csv(data_frame)
     response = make_response(csv_file)
     cd = 'attachment; filename=mycsv.csv'
     response.headers['Content-Disposition'] = cd
