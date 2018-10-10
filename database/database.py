@@ -21,7 +21,8 @@ if not engine.dialect.has_table(engine, 'url'):
 
 # TODO: adjust get-method for new DB-Fields of Amazon
 def get_sql_query():
-    csv_filter = Csv(str(request.args['reach']),
+    csv_filter = Csv(None,
+                     str(request.args['reach']),
                      str(request.args['url']),
                      str(request.args['tld']),
                      str(request.args['statuscode']),
@@ -40,3 +41,7 @@ def get_sql_query():
             count += 1
 
     return builder.build()
+
+
+def get_sql_delete_query():
+    return 'DELETE from url;'

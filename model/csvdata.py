@@ -7,7 +7,7 @@ from tld import get_tld, get_fld
 class Csv:
     '''Common base class for all csv input'''
 
-    def __init__(self, id=None, globalrank=None, reach=None, url=None, tld=None, statuscode=None):
+    def __init__(self, id=None, reach=None, url=None, tld=None, statuscode=None, globalrank=None):
         self.id = id
         self.globalrank = globalrank
         self.url = url

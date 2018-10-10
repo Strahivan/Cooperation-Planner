@@ -3,7 +3,7 @@ import httplib
 import pandas as pd
 from flask import Flask, render_template, request, make_response
 
-from database.database import engine, get_sql_query
+from database.database import engine, get_sql_query, get_sql_delete_query
 from model.csvdata import parse_csv_to_model, check_column_with_model
 
 app = Flask(__name__)
@@ -58,9 +58,7 @@ def generate_csv():
 
 @app.route('/delete_db')
 def delete_db():
-    # Todo: Source this sql-query out to util/query_builder.py
-    sql = 'DELETE from url;'
-    engine.execute(sql)
+    engine.execute(get_sql_delete_query)
     return '', httplib.NO_CONTENT
 
 
