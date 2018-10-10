@@ -1,21 +1,21 @@
 <table id="table_with_pagination" class="table table-striped">
     <thead class="thead-dark">
     <tr class="filters">
-        <th>Status</th>
+        <th>Globalrank</th>
         <th>Url</th>
         <th>Statuscode</th>
         <th>TLD</th>
-        <th>Inlink</th>
+        <th>Reach</th>
     </tr>
     </thead>
     <tbody id="table_body">
     {% for row in csvArray %}
     <tr>
-        <td>{{ row.status }}</td>
+        <td>{{ row.globalrank|int }}</td>
         <td>{{ row.url }}</td>
-        <td>{{ row.statuscode }}</td>
+        <td>{{ row.statuscode|int }}</td>
         <td>{{ row.tld }}</td>
-        <td>{{ row.inLink }}</td>
+        <td>{{ row.reach|int }}</td>
     </tr>
     {% endfor %}
     </tbody>
