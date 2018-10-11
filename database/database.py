@@ -1,10 +1,10 @@
 from flask import request
 from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
+from tld import get_fld
 
 from model.csvdata import Csv
 from util.query_builder import Builder
 
-# TODO: adjust DB-Structure for new DB-Fields of Amazon
 metadata = MetaData()
 engine = create_engine('sqlite:///database/database.db')
 if not engine.dialect.has_table(engine, 'url'):
@@ -19,7 +19,6 @@ if not engine.dialect.has_table(engine, 'url'):
     url.create(engine)
 
 
-# TODO: adjust get-method for new DB-Fields of Amazon
 def get_sql_query():
     csv_filter = Csv(None,
                      str(request.args['reach']),
@@ -41,6 +40,15 @@ def get_sql_query():
             count += 1
 
     return builder.build()
+
+
+def select_query_for(selectedUrl, statuscode):
+    if statuscode != 404:
+        builder = Builder('*')
+        builder.from_table('url')
+        builder.where('url', get_fld(selectedUrl))
+        return builder.build()
+    return None
 
 
 def get_sql_delete_query():

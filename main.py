@@ -3,7 +3,7 @@ import httplib
 import pandas as pd
 from flask import Flask, render_template, request, make_response
 
-from database.database import engine, get_sql_query, get_sql_delete_query
+from database.database import engine, get_sql_query, get_sql_delete_query, select_query_for
 from model.csvdata import parse_csv_to_model, check_column_with_model
 
 app = Flask(__name__)
@@ -37,8 +37,13 @@ def upload_file():
     csv_array = parse_csv_to_model(data_frame)
 
     for csv_obj in csv_array:
-        data_frame['url'] = data_frame['url'].replace([csv_obj.url], csv_obj.split_url())
-        data_frame['tld'] = csv_obj.split_tld()
+        sql_query = select_query_for(csv_obj.url, csv_obj.statuscode)
+        if sql_query is not None and not pd.read_sql_query(sql_query, engine).empty:
+            pd.read_sql_query(sql_query, engine)
+            data_frame.drop(csv_array.index(csv_obj), axis='rows', inplace=True)
+        else:
+            data_frame['url'] = data_frame['url'].replace([csv_obj.url], csv_obj.split_url())
+            data_frame['tld'] = csv_obj.split_tld()
 
     data_frame.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
@@ -58,7 +63,7 @@ def generate_csv():
 
 @app.route('/delete_db')
 def delete_db():
-    engine.execute(get_sql_delete_query)
+    engine.execute(get_sql_delete_query())
     return '', httplib.NO_CONTENT
 
 
