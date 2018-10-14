@@ -72,6 +72,10 @@ $(document).ready(function(){
                 $(".data_table").load("/data", function() {
                     $('.loading').addClass( "d-none" );
                 });
+            },
+            error: function(msg){
+                $('.loading').addClass( "d-none" );
+                alert('Fehler beim laden der CSV Datei!');
             }
        });
     });

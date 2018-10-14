@@ -46,7 +46,7 @@ def select_query_for(selectedUrl, statuscode):
     if statuscode != 404:
         builder = Builder('*')
         builder.from_table('url')
-        builder.where('url', get_fld(selectedUrl))
+        builder.where('url', get_fld(selectedUrl, fix_protocol=True))
         return builder.build()
     return None
 

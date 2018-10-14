@@ -21,7 +21,7 @@ class Csv:
         return get_fld(self.url, fix_protocol=True)
 
     def split_tld(self):
-        return get_tld(self.url, fix_protocol=True)
+        return '.' + get_tld(self.url, fix_protocol=True)
 
 
 def parse_csv_to_model(data_frame):

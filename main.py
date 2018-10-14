@@ -32,18 +32,18 @@ def filter_data_table():
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
     request_file = request.files['files']
-    data_frame = check_column_with_model(pd.read_csv(request_file))
+    data_frame = check_column_with_model(pd.read_csv(request_file, low_memory=False))
 
     csv_array = parse_csv_to_model(data_frame)
 
-    for csv_obj in csv_array:
+    for idx, csv_obj in enumerate(csv_array):
         sql_query = select_query_for(csv_obj.url, csv_obj.statuscode)
         if sql_query is not None and not pd.read_sql_query(sql_query, engine).empty:
             pd.read_sql_query(sql_query, engine)
             data_frame.drop(csv_array.index(csv_obj), axis='rows', inplace=True)
         else:
-            data_frame['url'] = data_frame['url'].replace([csv_obj.url], csv_obj.split_url())
-            data_frame['tld'] = csv_obj.split_tld()
+            data_frame.set_value(idx, 'url', csv_obj.split_url())
+            data_frame.set_value(idx, 'tld', csv_obj.split_tld())
 
     data_frame.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
