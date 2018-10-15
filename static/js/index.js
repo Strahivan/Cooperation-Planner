@@ -1,8 +1,11 @@
 $(document).ready(function(){
 
     $('.loading').removeClass( "d-none" )
-    $(".data_table").load("/data", function() {
+    $(".data_table").load("/data", function(response, status, xhr) {
          $('.loading').addClass( "d-none" );
+         if ( status == "error" ) {
+            alert('Fehler beim laden der CSV Datei!');
+         }
      });
 
     $('#saveFilter').click(function(){
@@ -14,8 +17,12 @@ $(document).ready(function(){
             $tld = $filterPanel.find('#tld'),
             $globalrank = $filterPanel.find('#globalrank');
             $(".data_table").load("/filter?reach="+ $reach.val() + '&url=' + $url.val() +
-                    '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&globalrank=' + $globalrank.val(), function() {
+                    '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&globalrank=' + $globalrank.val(),
+                function(response, status, xhr) {
                     $('.loading').addClass( "d-none" );
+                    if ( status == "error" ) {
+                        alert('Fehler beim laden der CSV Datei!');
+                    }
             });
     });
 
@@ -23,8 +30,11 @@ $(document).ready(function(){
         $('.loading').removeClass( "d-none" )
         var $filterPanel = $('#filterFieldSet');
             $filterPanel.find('input').val('');
-            $(".data_table").load("/filter?globalrank=&url=&statuscode=&tld=&reach=", function() {
-                    $('.loading').addClass( "d-none" );
+            $(".data_table").load("/filter?globalrank=&url=&statuscode=&tld=&reach=", function(response, status, xhr) {
+                $('.loading').addClass( "d-none" );
+                if ( status == "error" ) {
+                    alert('Fehler beim laden der CSV Datei!');
+                }
             });
     });
 
@@ -43,14 +53,19 @@ $(document).ready(function(){
               'download': 'plot.csv',
               'text': "click"
             }).hide().appendTo("body")[0].click();
+        }).fail(function() {
+            alert('Fehler beim laden der CSV Datei!');
         });
     });
 
     $('.btn-delete').click(function(){
          $('.loading').removeClass( "d-none" )
          $.get( "/delete_db", function(){
-                $(".data_table").load("/data", function() {
+                $(".data_table").load("/data", function(response, status, xhr) {
                     $('.loading').addClass( "d-none" );
+                    if ( status == "error" ) {
+                        alert('Fehler beim laden der CSV Datei!');
+                    }
             });
          });
     });
@@ -75,7 +90,7 @@ $(document).ready(function(){
             },
             error: function(msg){
                 $('.loading').addClass( "d-none" );
-                alert('Fehler beim laden der CSV Datei!');
+                    alert('Fehler beim laden der CSV Datei!');
             }
        });
     });
