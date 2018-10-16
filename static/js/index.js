@@ -4,7 +4,7 @@ $(document).ready(function(){
     $(".data_table").load("/data", function(response, status, xhr) {
          $('.loading').addClass( "d-none" );
          if ( status == "error" ) {
-            alert('Fehler beim laden der CSV Datei!');
+            alert('Fehler beim Aufbau der Datenbankverbindung');
          }
      });
 
@@ -21,7 +21,7 @@ $(document).ready(function(){
                 function(response, status, xhr) {
                     $('.loading').addClass( "d-none" );
                     if ( status == "error" ) {
-                        alert('Fehler beim laden der CSV Datei!');
+                        alert('Fehler beim Laden der Datenbank');
                     }
             });
     });
@@ -33,7 +33,7 @@ $(document).ready(function(){
             $(".data_table").load("/filter?globalrank=&url=&statuscode=&tld=&reach=", function(response, status, xhr) {
                 $('.loading').addClass( "d-none" );
                 if ( status == "error" ) {
-                    alert('Fehler beim laden der CSV Datei!');
+                    alert('Fehler beim Laden der Datenbank');
                 }
             });
     });
@@ -54,7 +54,7 @@ $(document).ready(function(){
               'text': "click"
             }).hide().appendTo("body")[0].click();
         }).fail(function() {
-            alert('Fehler beim laden der CSV Datei!');
+            alert('Fehler beim Exportieren der CSV-Datei!');
         });
     });
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
                 $(".data_table").load("/data", function(response, status, xhr) {
                     $('.loading').addClass( "d-none" );
                     if ( status == "error" ) {
-                        alert('Fehler beim laden der CSV Datei!');
+                        alert('Fehler beim Löschen der Datenbank');
                     }
             });
          });
@@ -90,7 +90,7 @@ $(document).ready(function(){
             },
             error: function(msg){
                 $('.loading').addClass( "d-none" );
-                    alert('Fehler beim laden der CSV Datei!');
+                    alert('Überprüfen Sie die Struktur ihrer CSV-Datei');
             }
        });
     });

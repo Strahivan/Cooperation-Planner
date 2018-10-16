@@ -5,6 +5,22 @@ from tld import get_fld
 from model.csvdata import Csv
 from util.query_builder import Builder
 
+# ------- DATABASE.PY -------
+
+"""
+This module handles all queries and actions with the database.
+It uses the query_builder.py-file in order to build the queries and is mainly called by the main.py-file
+
+:copyright: (c)2018 by Michele Santoro, Steve Iva
+:license: Apache 2.0, see LICENSE
+"""
+
+
+"""
+Initializes the database in the first step.
+Calls the engine for the database and specifies the local database structure.
+"""
+
 metadata = MetaData()
 engine = create_engine('sqlite:///database/database.db')
 if not engine.dialect.has_table(engine, 'url'):
@@ -18,6 +34,11 @@ if not engine.dialect.has_table(engine, 'url'):
                 Column('globalrank', Integer, nullable=True))
     url.create(engine)
 
+"""
+This method is a filter function and pulls the filter arguments from the request (user input) in the first step.
+Then builds an SQL query with the filter arguments.
+Nothing is executed at this point, only the SQL queries are built.
+"""
 
 def get_sql_query():
     csv_filter = Csv(None,
@@ -42,6 +63,12 @@ def get_sql_query():
     return builder.build()
 
 
+"""
+Builds a SQL query that checks if a selected URL is already in the database (exception if it's a 404 status code).
+If it's a 404, it should return a builder.build() that in turn returns a SQL query to execute.
+If it is not a 404, it returns nothing.
+"""
+
 def select_query_for(selectedUrl, statuscode):
     if statuscode != 404:
         builder = Builder('*')
@@ -51,5 +78,6 @@ def select_query_for(selectedUrl, statuscode):
     return None
 
 
+"""Method for deleting all entries from the url-table (database)"""
 def get_sql_delete_query():
     return 'DELETE from url;'

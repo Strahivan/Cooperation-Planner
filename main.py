@@ -6,13 +6,35 @@ from flask import Flask, render_template, request, make_response
 from database.database import engine, get_sql_query, get_sql_delete_query, select_query_for
 from model.csvdata import parse_csv_to_model, check_column_with_model
 
+
+# ------- MAIN.PY -------
+
+"""
+This module is the main thread of the cooperation planning tool.
+
+:copyright: (c)2018 by Michele Santoro, Steve Iva
+:license: Apache 2.0, see LICENSE
+"""
+
+
+
 app = Flask(__name__)
 
+"""
+Loads the index.html-file in the first step.
+The index.html makes an AJAX request to '/data' and thus loads the table.html.
+"""
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+"""
+Loads the data table from the database. Then it takes the data_frame and parses it into a csv_array and returns it
+to the table.html. Loads the table.html in the last step.
+
+data_frame = creates a panda data_frame with the data from the database.
+"""
 
 @app.route('/data')
 def data_table():
@@ -21,12 +43,35 @@ def data_table():
     return render_template('table.html', csvArray=csv_array)
 
 
+"""
+sql_query = gets the filter parameters from the request (user input)
+data_frame = runs through the database with the filter parameters and loads them
+It then takes the data_frame and parses it into a csv_array and returns this
+to the table.html. Loads the table.html in the last step.
+"""
+
 @app.route('/filter')
 def filter_data_table():
     sql_query = get_sql_query()
     data_frame = pd.read_sql_query(sql_query, engine)
     csv_array = parse_csv_to_model(data_frame)
     return render_template('table.html', csvArray=csv_array)
+
+
+"""
+The  CSV file is drawn as an HTML element and checks the entries with regard to their structure with
+the check_column_with_model-Method. All entries that do not fit structurally will be deleted, otherwise
+the application stores the "correct" elements in the object data_frame.
+
+Then the data_frame is parsed to a CSV array again.
+
+The first for-loop with idx and csv_object checks if it is a 404 error (sql_query is None if 404 error),
+and whether the entry already exists in the database.
+If it jumps out of the IF-Statement, it goes into the else and cuts the URL and TLD out.
+
+At data_frame.to_sql the application then writes all input into the database.
+
+"""
 
 
 @app.route('/upload_file', methods=['POST'])
@@ -62,6 +107,11 @@ def upload_file():
     return '', httplib.NO_CONTENT
 
 
+"""
+sql_query = get_sql_query pulls out the filter parameters from the user input and creates a data_frame and then a CSV file.
+Writes this to a CSV file and returns it as a response (for download).
+"""
+
 @app.route('/generate_csv')
 def generate_csv():
     sql_query = get_sql_query()
@@ -73,6 +123,9 @@ def generate_csv():
     response.mimetype = 'text/csv'
     return response
 
+"""
+Deletes the database.
+"""
 
 @app.route('/delete_db')
 def delete_db():
@@ -81,4 +134,4 @@ def delete_db():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
