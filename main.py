@@ -32,20 +32,33 @@ def filter_data_table():
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
     request_file = request.files['files']
-    data_frame = check_column_with_model(pd.read_csv(request_file, low_memory=False))
+    df = check_column_with_model(pd.read_csv(request_file, low_memory=False))
+    csv_array = parse_csv_to_model(df)
 
-    csv_array = parse_csv_to_model(data_frame)
+    tmp_df = []
+    to_drop_urls = []
 
+    count = 0
     for idx, csv_obj in enumerate(csv_array):
+        df.set_value(idx, 'url', csv_obj.split_url())
+        df.set_value(idx, 'tld', csv_obj.split_tld())
+        if csv_obj.statuscode == 404:
+            tmp_df.append(df.iloc[idx - count].copy())
+            df.drop(idx, inplace=True)
+            count += 1
         sql_query = select_query_for(csv_obj.url, csv_obj.statuscode)
         if sql_query is not None and not pd.read_sql_query(sql_query, engine).empty:
             pd.read_sql_query(sql_query, engine)
-            data_frame.drop(csv_array.index(csv_obj), axis='rows', inplace=True)
-        else:
-            data_frame.set_value(idx, 'url', csv_obj.split_url())
-            data_frame.set_value(idx, 'tld', csv_obj.split_tld())
+            to_drop_urls.append(csv_obj.split_url())
 
-    data_frame.to_sql('url', engine, if_exists='append', index=False)
+    df.drop_duplicates('url', keep='first', inplace=True)
+
+    for to_drop_url in to_drop_urls:
+        df = df[df.url != to_drop_url]
+
+    for tmp in tmp_df:
+        df = df.append(tmp)
+    df.to_sql('url', engine, if_exists='append', index=False)
     return '', httplib.NO_CONTENT
 
 
