@@ -3,7 +3,6 @@ import json
 
 from tld import get_tld, get_fld
 
-
 # ------- CSVDATA.PY -------
 
 """
@@ -13,8 +12,9 @@ This module is a generic object class in order to handle all inputs as objects.
 :license: Apache 2.0, see LICENSE
 """
 
-
 """ Common base class for all csv input"""
+
+
 class Csv:
 
     def __init__(self, id=None, reach=None, url=None, tld=None, statuscode=None, globalrank=None):
@@ -39,13 +39,18 @@ class Csv:
     """Method for detecting the top-level domain field from the URL."""
 
     def split_tld(self):
-        return '.' + get_tld(self.url, fix_protocol=True)
+        tld = get_tld(self.url, fix_protocol=True, fail_silently=True)
+        if tld is not None:
+            return '.' + tld
+        else:
+            return None
 
 
 """
 Accepts raw data and creates a JSON from it.
 In the next step, these in turn are converted to of a list of CSV objects and returned.
 """
+
 
 def parse_csv_to_model(data_frame):
     json_output = data_frame.to_json(orient='records')
@@ -57,6 +62,7 @@ Method that adjusts the incoming data with regard to the CSV object.
 As soon as an entry from the CSV upload has values, that cannot be assigned to the CSV object,
 the entry is deleted from the temporary data_frame and thus not is considered further in the main.py.
 """
+
 
 def check_column_with_model(data_frame):
     for column in data_frame.columns.values:
