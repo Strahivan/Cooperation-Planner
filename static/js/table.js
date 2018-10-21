@@ -1,7 +1,9 @@
 $(document).ready(function(){
    $('#table_with_pagination').DataTable({
-        "pagingType": "full",
-        "searching": false
+        "searching": false,
+        "initComplete": function(settings, json) {
+            $('.loading').addClass( "d-none" );
+        }
    });
    $('.dataTables_length').addClass('bs-select');
 });

@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     $('.loading').removeClass( "d-none" )
     $(".data_table").load("/data", function(response, status, xhr) {
-         $('.loading').addClass( "d-none" );
          if ( status == "error" ) {
             alert('Fehler beim Aufbau der Datenbankverbindung');
          }
@@ -19,7 +18,6 @@ $(document).ready(function(){
             $(".data_table").load("/filter?reach="+ $reach.val() + '&url=' + $url.val() +
                     '&statuscode=' + $statuscode.val() + '&tld=' + $tld.val() + '&globalrank=' + $globalrank.val(),
                 function(response, status, xhr) {
-                    $('.loading').addClass( "d-none" );
                     if ( status == "error" ) {
                         alert('Fehler beim Laden der Datenbank');
                     }
@@ -31,7 +29,6 @@ $(document).ready(function(){
         var $filterPanel = $('#filterFieldSet');
             $filterPanel.find('input').val('');
             $(".data_table").load("/filter?globalrank=&url=&statuscode=&tld=&reach=", function(response, status, xhr) {
-                $('.loading').addClass( "d-none" );
                 if ( status == "error" ) {
                     alert('Fehler beim Laden der Datenbank');
                 }
@@ -62,9 +59,8 @@ $(document).ready(function(){
          $('.loading').removeClass( "d-none" )
          $.get( "/delete_db", function(){
                 $(".data_table").load("/data", function(response, status, xhr) {
-                    $('.loading').addClass( "d-none" );
                     if ( status == "error" ) {
-                        alert('Fehler beim Löschen der Datenbank');
+                        alert('Fehler beim Lï¿½schen der Datenbank');
                     }
             });
          });
@@ -84,13 +80,11 @@ $(document).ready(function(){
             cache: false,
             processData: false,
             success: function(data) {
-                $(".data_table").load("/data", function() {
-                    $('.loading').addClass( "d-none" );
-                });
+                $(".data_table").load("/data");
             },
             error: function(msg){
                 $('.loading').addClass( "d-none" );
-                    alert('Überprüfen Sie die Struktur ihrer CSV-Datei');
+                    alert('ï¿½berprï¿½fen Sie die Struktur ihrer CSV-Datei');
             }
        });
     });
