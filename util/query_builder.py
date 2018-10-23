@@ -15,18 +15,38 @@ class Builder(object):
         return self
 
     def where(self, key, value):
-        if value.isdigit():
-            self.__where = ' WHERE {} = {}'.format(key, value)
+        value = check_square_brackets(value)
+        if value[1].isdigit():
+            self.__where = ' WHERE {} {} {}'.format(key, value[0], value[1])
         else:
-            self.__where = ' WHERE {} LIKE "%{}%"'.format(key, value)
+            self.__where = ' WHERE {} {} "%{}%"'.format(key, value[0], value[1])
         return self
 
     def and_where(self, key, value):
-        if value.isdigit():
-            self.__and.append(' AND {} = {}'.format(key, value))
+        value = check_square_brackets(value)
+        if value[1].isdigit():
+            self.__where = ' WHERE {} {} {}'.format(key, value[0], value[1])
         else:
-            self.__and.append(' AND {} LIKE "%{}%"'.format(key, value))
+            self.__where = ' WHERE {} {} "%{}%"'.format(key, value[0], value[1])
         return self
 
     def build(self):
         return self.__select + self.__from + (self.__where or '') + ''.join(self.__and)
+
+
+def check_square_brackets(value):
+    if value.find('>=') == 0:
+        value = value.split('>=')
+        return '>=', value[1]
+    if value.find('<=') == 0:
+        value = value.split('<=')
+        return '<=', value[1]
+    if value.find('>') == 0:
+        value = value.split('>')
+        return '>', value[1]
+    if value.find('<') == 0:
+        value = value.split('<')
+        return '<', value[1]
+    if value.isdigit():
+        return '=', value
+    return 'like', value

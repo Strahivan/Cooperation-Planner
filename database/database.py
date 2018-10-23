@@ -15,7 +15,6 @@ It uses the query_builder.py-file in order to build the queries and is mainly ca
 :license: Apache 2.0, see LICENSE
 """
 
-
 """
 Initializes the database in the first step.
 Calls the engine for the database and specifies the local database structure.
@@ -39,6 +38,7 @@ This method is a filter function and pulls the filter arguments from the request
 Then builds an SQL query with the filter arguments.
 Nothing is executed at this point, only the SQL queries are built.
 """
+
 
 def get_sql_query():
     csv_filter = Csv(None,
@@ -69,6 +69,7 @@ If it's a 404, it should return a builder.build() that in turn returns a SQL que
 If it is not a 404, it returns nothing.
 """
 
+
 def select_query_for(selectedUrl, statuscode):
     if statuscode != 404:
         builder = Builder('*')
@@ -79,5 +80,7 @@ def select_query_for(selectedUrl, statuscode):
 
 
 """Method for deleting all entries from the url-table (database)"""
+
+
 def get_sql_delete_query():
     return 'DELETE from url;'
