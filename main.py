@@ -121,8 +121,9 @@ Writes this to a CSV file and returns it as a response (for download).
 @app.route('/generate_csv')
 def generate_csv():
     sql_query = get_sql_query()
-    data_frame = pd.read_sql_query(sql_query, engine)
-    csv_file = pd.DataFrame.to_csv(data_frame, encoding='UTF-8')
+    df = pd.read_sql_query(sql_query, engine)
+    df.drop('id', axis=1, inplace=True)
+    csv_file = pd.DataFrame.to_csv(df, encoding='UTF-8', index=False)
     response = make_response(csv_file)
     cd = 'attachment; filename=mycsv.csv'
     response.headers['Content-Disposition'] = cd
