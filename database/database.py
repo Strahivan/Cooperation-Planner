@@ -1,3 +1,5 @@
+import os
+
 from flask import request
 from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 from tld import get_fld
@@ -20,8 +22,14 @@ Initializes the database in the first step.
 Calls the engine for the database and specifies the local database structure.
 """
 
+dir_path = os.path.join(os.environ['HOME'], 'CooperationPlanner')
+if not os.path.exists(dir_path):
+    os.makedirs(dir_path)
+file_path = os.path.join(dir_path, 'database.db')
+print file_path
+
 metadata = MetaData()
-engine = create_engine('sqlite:///database/database.db')
+engine = create_engine('sqlite:///' + file_path)
 if not engine.dialect.has_table(engine, 'url'):
     metadata = MetaData(engine)
     url = Table('url', metadata,

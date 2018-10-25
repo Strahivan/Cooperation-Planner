@@ -1,4 +1,6 @@
 import httplib
+import os
+import sys
 
 import pandas as pd
 from flask import Flask, render_template, request, make_response
@@ -15,7 +17,12 @@ This module is the main thread of the cooperation planning tool.
 :license: Apache 2.0, see LICENSE
 """
 
-app = Flask(__name__)
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    static_folder = os.path.join(sys._MEIPASS, 'static')
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+else:
+    app = Flask(__name__)
 
 """
 Loads the index.html-file in the first step.

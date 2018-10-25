@@ -24,3 +24,16 @@ IVW: http://ausweisung.ivw-online.de/index.php?i=10&mz_szm=201808&pis=0&az_filte
 Damit die CSV-Datei vom Programm akzeptiert wird, muss die CSV-Datei im Header wie folgt aussehen: reach, url, statuscode, globalrank
 Du kannst auch mehr Elemente reinmachen, die Applikation beachtet diese Werte allerdings nicht, er nimmt immer nur die oberen 4 und generiert TLD noch.
 CSV muss den Header in der ersten Zeile haben mit den entsprechenden Datenfeldern.
+
+PyInstaller Package:
+
+#Unix/Mac (note the four leading slashes)
+sqlite:////absolute/path/to/foo.db
+#Windows (note 3 leading forward slashes and backslash escapes)
+sqlite:///C:\\absolute\\path\\to\\foo.db
+
+Windows not testes...:
+pyinstaller -w -F --add-data "templates;templates" --add-data "static;static" main.py
+
+Linux:
+pyinstaller -w -F --add-data "templates:templates" --add-data "static:static" --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' main.py
