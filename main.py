@@ -1,5 +1,6 @@
 import httplib
 import os
+import ssl
 import sys
 
 import pandas as pd
@@ -23,6 +24,10 @@ if getattr(sys, 'frozen', False):
     app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 else:
     app = Flask(__name__)
+
+if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+    ssl._create_default_https_context = ssl._create_unverified_context
 
 """
 Loads the index.html-file in the first step.

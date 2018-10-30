@@ -36,4 +36,4 @@ Windows not testes...:
 pyinstaller -w -F --add-data "templates;templates" --add-data "static;static" main.py
 
 Linux:
-pyinstaller -w -F --add-data "templates:templates" --add-data "static:static" --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' main.py
+pyinstaller -w -F --add-data "templates:templates" --add-data "static:static" --add-data "tld/res:tld/res" --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' main.py
