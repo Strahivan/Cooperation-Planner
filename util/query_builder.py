@@ -25,9 +25,9 @@ class Builder(object):
     def and_where(self, key, value):
         value = check_square_brackets(value)
         if value[1].isdigit():
-            self.__where = ' WHERE {} {} {}'.format(key, value[0], value[1])
+            self.__and.append(' AND {} {} {}'.format(key, value[0], value[1]))
         else:
-            self.__where = ' WHERE {} {} "%{}%"'.format(key, value[0], value[1])
+            self.__and.append(' AND {} {} "%{}%"'.format(key, value[0], value[1]))
         return self
 
     def build(self):
