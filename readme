@@ -1,23 +1,5 @@
-Anforderungen an die Applikation Cloudwards:
-
-- Windows Betriebssystem ist okay
-- Eine Datenbank, in die ich neue Excel Files einlesen kann
-- Ist okay, wenn wir auf .csv limitieren, und auch die Strukturvorgabe(1. Spalte ist immer x, 2. Spalte ist immer y) findet er okay
-- Beim Einlesen einer neuen CSV-Datei sollen die URL-s gekürzt werden auf Hostdomain, außer der Statuscode ist ein 404er, dann soll die URL nicht verändert werden
-- Bevor dann die gekürzten URLs in die Datenbank geschrieben werden, soll überprüft werden ob die Datensätze schon vorhanden sind oder nicht (es sollen keine Duplikate vorkommen)
-- Datensätze aus der Datenbank sollen exportiert werden können als .csv
-- Schönes Interface (Grafische Oberfläche) --> Machen wir eine Web-View lokal
-- Soll über .exe startbar sein
-- Toplevel Domain soll filterbar sein (.de / .org / .com)
-- Dateien von Alexa Top Sites und IVW sind wichtig
-
-
-Bereitgestellte .csv: https://my.pcloud.com/publink/show?code=XZwfz17Ze1Ex1Pn2QfFsgixhqgXQDLCRR5tX
-
-Alexa Top Sites: https://aws.amazon.com/de/alexa-top-sites/getting-started/
-
-IVW: http://ausweisung.ivw-online.de/index.php?i=10&mz_szm=201808&pis=0&az_filter=0&kat1=0&kat2=0&kat3=0&kat4=0&kat5=0&kat6=0&kat7=0&kat8=0&sort=vgd&suche=
-
+#Cooperation Planner
+This application reads in a large list of domains/urls and lets you filter them
 
 # Header und File-Struktur
 
@@ -25,14 +7,14 @@ Damit die CSV-Datei vom Programm akzeptiert wird, muss die CSV-Datei im Header w
 Du kannst auch mehr Elemente reinmachen, die Applikation beachtet diese Werte allerdings nicht, er nimmt immer nur die oberen 4 und generiert TLD noch.
 CSV muss den Header in der ersten Zeile haben mit den entsprechenden Datenfeldern.
 
-PyInstaller Package:
+#How to create a PyInstaller Package:
 
 #Unix/Mac (note the four leading slashes)
 sqlite:////absolute/path/to/foo.db
 #Windows (note 3 leading forward slashes and backslash escapes)
 sqlite:///C:\\absolute\\path\\to\\foo.db
 
-Windows not testes...:
+Windows:
 pyinstaller -w -F --add-data "templates;templates" --add-data "static;static" main.py
 
 Linux:
