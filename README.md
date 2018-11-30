@@ -9,13 +9,13 @@ CSV must have the header in the first line with the corresponding data fields.
 
 ## How to create a PyInstaller Package:
 
-#Unix/Mac (note the four leading slashes)
+### Unix/Mac (note the four leading slashes)
 sqlite:////absolute/path/to/foo.db
 #Windows (note 3 leading forward slashes and backslash escapes)
 sqlite:///C:\\absolute\\path\\to\\foo.db
 
-Windows:
+### Windows:
 pyinstaller -w -F --add-data "templates;templates" --add-data "static;static" main.py
 
-Linux:
+### Linux:
 pyinstaller -w -F --add-data "templates:templates" --add-data "static:static" --add-data "tld/res:tld/res" --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' main.py
