@@ -1,13 +1,13 @@
-#Cooperation Planner
+# Cooperation Planner
 This application reads in a large list of domains/urls and lets you filter them
 
-# Header und File-Struktur
+## Header und File Structure
 
-Damit die CSV-Datei vom Programm akzeptiert wird, muss die CSV-Datei im Header wie folgt aussehen: reach, url, statuscode, globalrank
-Du kannst auch mehr Elemente reinmachen, die Applikation beachtet diese Werte allerdings nicht, er nimmt immer nur die oberen 4 und generiert TLD noch.
-CSV muss den Header in der ersten Zeile haben mit den entsprechenden Datenfeldern.
+For the CSV file to be accepted by the program, the CSV file must look like this in the header: reach, url, statuscode, globalrank
+You can also add more elements, but the application doesn't take these values into account, it only takes the upper 4 and generates TLDs.
+CSV must have the header in the first line with the corresponding data fields.
 
-#How to create a PyInstaller Package:
+## How to create a PyInstaller Package:
 
 #Unix/Mac (note the four leading slashes)
 sqlite:////absolute/path/to/foo.db
